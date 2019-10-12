@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import SignUpForm from "./Components/SignUpForm";
 import LogInForm from "./Components/LogInForm";
+import CategoryList from "./Components/CategoryList";
 import "./App.css";
 
 function App () {
@@ -16,7 +17,7 @@ function App () {
 			<div className="App">
 				<Switch>
 					<Route exact path="/" component={formComponent} />
-					<Route exact path="/" />
+					<Route exact path="/category" component={CategoryList} />
 				</Switch>
 			</div>
 		</HashRouter>

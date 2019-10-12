@@ -7,10 +7,14 @@ function SignUpForm () {
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
 
+	function submitForm (e) {
+		e.preventDefault();
+	}
+
 	return (
 		<div className="form-wrapper">
 			<h1 className="form-heading">Sign Up</h1>
-			<form action="" className="form login">
+			<form onSubmit={submitForm} className="form login">
 				<div className="input-field">
 					<i className="fas fa-user" />
 					<input
