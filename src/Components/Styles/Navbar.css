@@ -7,8 +7,8 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #202020;
-	color: white;
+	background-color: #171738;
+	color: #dff3e4;
 	padding: 0 2rem;
 	box-sizing: border-box;
 	box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.75);
@@ -16,7 +16,7 @@
 
 .navbar-link {
 	text-decoration: none;
-	color: white;
+	color: #dff3e4;
 }
 
 .navbar-link.logo {
