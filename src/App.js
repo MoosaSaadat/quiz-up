@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Navbar from "./Components/Navbar";
 import SignUpForm from "./Components/SignUpForm";
@@ -12,13 +12,15 @@ import "./App.css";
 function App () {
 	const [ hasAccount, setHasAccount ] = useState(true);
 
-	const formComponent = !hasAccount ? LogInForm : SignUpForm;
 	return (
 		<HashRouter>
 			<Navbar />
 			<div className="App">
+				<Redirect to={ROUTES.LOG_IN} />
 				<Switch>
-					<Route exact path={ROUTES.HOME} component={formComponent} />
+					{/* <Route exact path={ROUTES.HOME} component={<h1>I'M HOME</h1>} /> */}
+					<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
+					<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
 					<Route exact path={ROUTES.CATEGORY} component={CategoryList} />
 					<Route exact path={ROUTES.QUESTIONS} component={Questions} />
 				</Switch>

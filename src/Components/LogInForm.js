@@ -1,12 +1,26 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
+import { withFirebase } from "./Firebase";
+import * as ROUTES from "../Constants/Routes";
 import "./Styles/Form.css";
 
-function LogInForm () {
+function LogInForm (props) {
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
+	const [ error, setError ] = useState(null);
 
 	function submitForm (e) {
+		props.firebase
+			.doSignInWithEmailAndPassword(email, password)
+			.then((authUser) => {
+				setEmail("");
+				setPassword("");
+				props.history.push(ROUTES.HOME);
+			})
+			.catch((error) => {
+				setError(error);
+			});
 		e.preventDefault();
 	}
 
@@ -35,9 +49,10 @@ function LogInForm () {
 				<button className="form-btn" type="submit">
 					Log In
 				</button>
+				{error && <p className="form-error">{error.message}</p>}
 			</form>
 		</div>
 	);
 }
 
-export default LogInForm;
+export default withRouter(withFirebase(LogInForm));
