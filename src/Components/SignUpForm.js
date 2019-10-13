@@ -1,13 +1,28 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
+import { withFirebase } from "./Firebase";
+import * as ROUTES from "../Constants/Routes";
 import "./Styles/Form.css";
 
-function SignUpForm () {
+function SignUpForm (props) {
 	const [ name, setName ] = useState("");
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
+	const [ error, setError ] = useState(null);
 
 	function submitForm (e) {
+		props.firebase
+			.doCreateUserWithEmailAndPassword(email, password)
+			.then((authUser) => {
+				setName("");
+				setEmail("");
+				setPassword("");
+				props.history.push(ROUTES.HOME);
+			})
+			.catch((error) => {
+				setError(error);
+			});
 		e.preventDefault();
 	}
 
@@ -45,9 +60,10 @@ function SignUpForm () {
 				<button className="form-btn" type="submit">
 					Sign Up
 				</button>
+				{error && <p className="form-error">{error.message}</p>}
 			</form>
 		</div>
 	);
 }
 
-export default SignUpForm;
+export default withRouter(withFirebase(SignUpForm));
