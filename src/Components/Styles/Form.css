@@ -86,3 +86,11 @@
 	background-color: #d12121;
 	box-shadow: 3px 3px 0 #dff3e4;
 }
+
+.form-wrapper > h4 {
+	color: #dff3e4;
+}
+
+.form-wrapper > a {
+	color: #171738;
+}

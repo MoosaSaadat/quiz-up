@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import { withFirebase } from "./Firebase";
 import * as ROUTES from "../Constants/Routes";
@@ -16,7 +16,7 @@ function LogInForm (props) {
 			.then((authUser) => {
 				setEmail("");
 				setPassword("");
-				props.history.push(ROUTES.HOME);
+				props.history.push(ROUTES.CATEGORY);
 			})
 			.catch((error) => {
 				setError(error);
@@ -51,6 +51,8 @@ function LogInForm (props) {
 				</button>
 				{error && <p className="form-error">{error.message}</p>}
 			</form>
+			<h4>Don't have an account? Sign Up:</h4>
+			<Link to={ROUTES.SIGN_UP}>Sign Up</Link>
 		</div>
 	);
 }

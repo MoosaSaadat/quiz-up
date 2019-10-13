@@ -6,6 +6,10 @@ import { withFirebase } from "./Firebase";
 import "./Styles/Navbar.css";
 
 function Navbar (props) {
+	function logOut () {
+		props.firebase.doSignOut();
+		props.history.push(ROUTES.LOG_IN);
+	}
 	return (
 		<nav className="navbar">
 			<ul className="navbar-list">

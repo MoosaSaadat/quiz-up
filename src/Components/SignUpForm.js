@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import { withFirebase } from "./Firebase";
 import * as ROUTES from "../Constants/Routes";
@@ -62,6 +62,8 @@ function SignUpForm (props) {
 				</button>
 				{error && <p className="form-error">{error.message}</p>}
 			</form>
+			<h4>Already have and account? Log In:</h4>
+			<Link to={ROUTES.LOG_IN}>Log In</Link>
 		</div>
 	);
 }

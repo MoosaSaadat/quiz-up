@@ -18,8 +18,8 @@ function App () {
 		<HashRouter>
 			<Navbar />
 			<div className="App">
+				<Redirect to={ROUTES.LOG_IN} />
 				<Switch>
-					<Route exact path={ROUTES.HOME} component={Home} />
 					<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
 					<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
 					<Route exact path={ROUTES.CATEGORY} component={CategoryList} />
