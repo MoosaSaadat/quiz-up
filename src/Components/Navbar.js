@@ -1,22 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import * as ROUTES from "../Constants/Routes";
+import { withFirebase } from "./Firebase";
 import "./Styles/Navbar.css";
 
-function Navbar () {
+function Navbar (props) {
 	return (
 		<nav className="navbar">
-			<Link to="/" className="navbar-link">
-				Home
-			</Link>
-			<Link to="/" className="navbar-link logo">
-				Quiz Up
-			</Link>
-			<Link to="/" className="navbar-link">
-				Log Out
-			</Link>
+			<ul className="navbar-list">
+				<li className="navbar-item">
+					<Link to={ROUTES.HOME} className="navbar-link">
+						Home
+					</Link>
+				</li>
+				<li className="navbar-item logo">
+					<Link to={ROUTES.HOME} className="navbar-link">
+						QUIZ UP
+					</Link>
+				</li>
+				<li className="navbar-item">
+					<button type="button" onClick={props.firebase.doSignOut}>
+						Log Out
+					</button>
+				</li>
+			</ul>
 		</nav>
 	);
 }
 
-export default Navbar;
+export default withFirebase(Navbar);
