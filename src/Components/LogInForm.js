@@ -16,7 +16,7 @@ function LogInForm (props) {
 			.then((authUser) => {
 				setEmail("");
 				setPassword("");
-				props.history.push(ROUTES.CATEGORY);
+				props.history.push(ROUTES.HOME);
 			})
 			.catch((error) => {
 				setError(error);

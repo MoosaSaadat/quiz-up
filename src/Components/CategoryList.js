@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import CategoryItem from "./CategoryItem";
+import { withAuthorization } from "./Session";
 import "./Styles/Category.css";
 
 function CategoryList () {
@@ -24,4 +25,6 @@ function CategoryList () {
 	);
 }
 
-export default CategoryList;
+const condition = (authUser) => !!authUser;
+
+export default withAuthorization(condition)(CategoryList);
