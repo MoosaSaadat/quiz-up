@@ -27,6 +27,14 @@ function CategoryItem (props) {
 			<Link className="category-link" to="/category/questions">
 				{nameInput}
 			</Link>
+			<div className="actions">
+				<button className="edit" onClick={() => setIsEditing(true)}>
+					<i className="fas fa-pen" />
+				</button>
+				<button className="delete" onClick={() => setIsEditing(true)}>
+					<i className="fas fa-trash-alt" />
+				</button>
+			</div>
 		</li>
 	);
 }

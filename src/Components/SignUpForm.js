@@ -15,6 +15,13 @@ function SignUpForm (props) {
 		props.firebase
 			.doCreateUserWithEmailAndPassword(email, password)
 			.then((authUser) => {
+				// Create a user in your Firebase realtime database
+				return this.props.firebase.user(authUser.user.uid).set({
+					name,
+					highScore: 0
+				});
+			})
+			.then(() => {
 				setName("");
 				setEmail("");
 				setPassword("");

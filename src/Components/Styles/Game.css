@@ -1,0 +1,42 @@
+.game-container {
+	border: 1px solid #171738;
+	box-shadow: 3px 3px 0 #171738;
+	padding: 2rem;
+	color: #dff3e4;
+	width: 70%;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.time {
+	color: red;
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.question {
+	color: #171738;
+	font-weight: bold;
+	font-size: 3rem;
+	margin-bottom: 2rem;
+}
+
+.answer-container {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	width: 80%;
+}
+
+.answer {
+	background-color: #dff3e4;
+	border: 1px solid #171738;
+	box-shadow: 3px 3px 0 #171738;
+	box-sizing: border-box;
+	width: 40%;
+	padding: 1rem 3rem;
+	margin-top: 1rem;
+	cursor: pointer;
+}
