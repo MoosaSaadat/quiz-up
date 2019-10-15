@@ -11,7 +11,7 @@ function Game (props) {
 		(ctg) => ctg.name.toLowerCase() === currCtg.toLowerCase()
 	)[0].questions;
 
-	const [ time, setTime ] = useState(60);
+	const [ time, setTime ] = useState(10);
 	const [ score, setScore ] = useState(0);
 	const [ currQues, setCurrQues ] = useState(0);
 
@@ -26,9 +26,42 @@ function Game (props) {
 	useEffect(
 		() => {
 			if (time <= -3) props.history.push(ROUTES.HOME);
+			else if (time <= 0) {
+				var user = props.firebase.auth.currentUser;
+				if (user) {
+					console.log(user);
+					updateUserData(user);
+					// props.firebase.db.
+				}
+			}
 		},
 		[ time ]
 	);
+
+	const updateUserData = (user) => {
+		props.firebase.db
+			.collection("users")
+			.get()
+			.then(function (querySnapshot) {
+				var newList = [];
+				querySnapshot.forEach(function (doc) {
+					// console.log(doc.id, " => ", doc.data());
+					newList.push({ key: doc.id, ...doc.data() });
+				});
+				newList = newList.filter((item) => item.email === user.email);
+				console.log(newList);
+				updateDocument(newList[0].key);
+			})
+			.catch(function (error) {
+				console.log("Error getting documents: ", error);
+			});
+	};
+
+	const updateDocument = (documentId) => {
+		props.firebase.db.collection("users").doc(documentId).update({
+			highScore: score
+		});
+	};
 
 	const handleClick = (e) => {
 		if (e.target.name === questions[currQues].correctAns) {
