@@ -31,7 +31,6 @@ function Game (props) {
 				if (user) {
 					console.log(user);
 					updateUserData(user);
-					// props.firebase.db.
 				}
 			}
 		},
@@ -45,12 +44,10 @@ function Game (props) {
 			.then(function (querySnapshot) {
 				var newList = [];
 				querySnapshot.forEach(function (doc) {
-					// console.log(doc.id, " => ", doc.data());
 					newList.push({ key: doc.id, ...doc.data() });
 				});
 				newList = newList.filter((item) => item.email === user.email);
-				console.log(newList);
-				updateDocument(newList[0].key);
+				if (newList[0].highScore < score) updateDocument(newList[0].key);
 			})
 			.catch(function (error) {
 				console.log("Error getting documents: ", error);
