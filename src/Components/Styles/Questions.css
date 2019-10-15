@@ -1,9 +1,27 @@
-.questions-wrapper {
+.questions-list {
+	width: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+}
+
+.play-game {
+	background-color: #dff3e4;
+	color: #171738;
+	font-weight: bold;
+	padding: 1rem 3rem;
+	border-radius: 10px;
+	text-decoration: none;
+	margin-bottom: 2rem;
+}
+
+.question-wrapper {
 	border: 1px solid #171738;
 	box-shadow: 3px 3px 0 #171738;
 	padding: 2rem;
 	color: #dff3e4;
 	width: 70%;
+	margin-bottom: 2rem;
 }
 
 .question {

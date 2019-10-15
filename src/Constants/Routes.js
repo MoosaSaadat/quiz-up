@@ -2,8 +2,8 @@
 export const HOME = "/";
 export const SIGN_UP = "/signup";
 export const LOG_IN = "/login";
-export const QUESTION = "/:question";
-export const GAME = "/game";
+export const QUESTIONS = "/:category";
+export const GAME = "/:category/game";
 
 //FOR DESIGNER
 export const PORTAL_HOME = "/portal/";

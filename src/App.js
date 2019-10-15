@@ -34,18 +34,33 @@ function App (props) {
 	}, []);
 
 	return (
-		<HashRouter>
-			<Navbar />
-			<div className="App">
-				<Switch>
-					<Route exact path={ROUTES.HOME} component={CategoryList} />
-					<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
-					<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
-					<Route exact path={ROUTES.GAME} component={Game} />
-					<Route path={ROUTES.HOME} component={CategoryList} />
-				</Switch>
-			</div>
-		</HashRouter>
+		!!allData && (
+			<HashRouter>
+				<Navbar />
+				<div className="App">
+					<Switch>
+						<Route
+							exact
+							path={ROUTES.HOME}
+							render={(routeProps) => (
+								<CategoryList ctgList={allData} {...routeProps} />
+							)}
+						/>
+						<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
+						<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
+						<Route exact path={ROUTES.GAME} component={Game} />
+						<Route
+							exact
+							path={ROUTES.QUESTIONS}
+							render={(routeProps) => (
+								<Questions ctgList={allData} {...routeProps} />
+							)}
+						/>
+						<Route path={ROUTES.HOME} component={CategoryList} />
+					</Switch>
+				</div>
+			</HashRouter>
+		)
 	);
 }
 export default withAuthentication(App);
