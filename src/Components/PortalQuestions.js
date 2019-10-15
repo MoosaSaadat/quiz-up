@@ -10,7 +10,7 @@ function Questions (props) {
 	const questions = props.ctgList.filter(
 		(ctg) => ctg.name.toLowerCase() === currCtg.toLowerCase()
 	)[0].questions;
-	console.log(questions);
+	// console.log(questions);
 
 	const questionsList = questions.map((ques, idx) => (
 		<div key={idx} className="question-wrapper">
@@ -28,7 +28,7 @@ function Questions (props) {
 	return (
 		<div className="questions-list">
 			<h2 className="questions-heading">Questions Stored in {currCtg}</h2>
-			<Link to={ROUTES.GAME} className="play-game">
+			<Link to={`/${currCtg.toLowerCase()}/game`} className="play-game">
 				Click to Play Game for this Category
 			</Link>
 			{questionsList}

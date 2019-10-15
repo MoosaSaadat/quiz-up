@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./Styles/Category.css";
 
 function CategoryItem (props) {
-	console.log(props.name.toLowerCase());
+	// console.log(props.name.toLowerCase());
 	const [ name, setName ] = useState(props.name);
 	const [ isEditing, setIsEditing ] = useState(false);
 

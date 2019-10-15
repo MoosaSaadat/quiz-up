@@ -1,0 +1,27 @@
+.users-container {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+.users-heading {
+	color: #171738;
+}
+
+.users-list {
+	color: #dff3e4;
+	width: 70%;
+	list-style: none;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+.user-item {
+	border: 1px solid #171738;
+	box-shadow: 3px 3px 0 #171738;
+	padding: 1rem;
+	color: #171738;
+	width: 70%;
+}

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import CategoryItem from "./CategoryItem";
 import { withAuthorization } from "./Session";
-import { AuthUserContext } from "./Session";
 import "./Styles/Category.css";
 
 function CategoryList (props) {
-	console.log(props.ctgList);
+	// console.log(props.ctgList);
 	const allCategories = props.ctgList.map((item) => (
 		<CategoryItem key={item.key} name={item.name} />
 	));

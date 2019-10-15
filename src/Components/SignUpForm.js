@@ -11,26 +11,34 @@ function SignUpForm (props) {
 	const [ password, setPassword ] = useState("");
 	const [ error, setError ] = useState(null);
 
-	function submitForm (e) {
-		props.firebase
-			.doCreateUserWithEmailAndPassword(email, password)
-			.then((authUser) => {
-				// Create a user in your Firebase realtime database
-				return this.props.firebase.user(authUser.user.uid).set({
-					name,
-					highScore: 0
-				});
+	function addUser () {
+		props.firebase.db
+			.collection("users")
+			.add({
+				name,
+				email,
+				highScore: 0
 			})
 			.then(() => {
 				setName("");
 				setEmail("");
 				setPassword("");
+				console.log("User Added!");
 				props.history.push(ROUTES.HOME);
 			})
 			.catch((error) => {
 				setError(error);
 			});
+	}
+
+	function submitForm (e) {
 		e.preventDefault();
+		props.firebase
+			.doCreateUserWithEmailAndPassword(email, password)
+			.then(addUser())
+			.catch((error) => {
+				setError(error);
+			});
 	}
 
 	return (

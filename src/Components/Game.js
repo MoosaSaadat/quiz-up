@@ -1,38 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { withAuthorization } from "./Session";
 import * as ROUTES from "../Constants/Routes";
 import "./Styles/Game.css";
 
 function Game (props) {
-	const [ questions ] = useState([
-		{
-			answers: [ "Hello", "How are you?", "Bye", "See you Soon" ],
-			correctAns: "0",
-			ques: "How to great someone?"
-		},
-		{
-			answers: [ "Hello", "How are you?", "Bye", "See you Soon" ],
-			correctAns: "0",
-			ques: "Question number 2?"
-		},
-		{
-			answers: [ "Hello", "How are you?", "Bye", "See you Soon" ],
-			correctAns: "0",
-			ques: "Question number 3?"
-		},
-		{
-			answers: [ "Hello", "How are you?", "Bye", "See you Soon" ],
-			correctAns: "0",
-			ques: "Question number 4?"
-		},
-		{
-			answers: [ "Hello", "How are you?", "Bye", "See you Soon" ],
-			correctAns: "0",
-			ques: "Question number 5?"
-		}
-	]);
-	const [ time, setTime ] = useState(10);
+	const currCtg = useParams().category;
+	const questions = props.ctgList.filter(
+		(ctg) => ctg.name.toLowerCase() === currCtg.toLowerCase()
+	)[0].questions;
+
+	const [ time, setTime ] = useState(60);
 	const [ score, setScore ] = useState(0);
 	const [ currQues, setCurrQues ] = useState(0);
 

@@ -7,5 +7,5 @@ export const GAME = "/:category/game";
 
 //FOR DESIGNER
 export const PORTAL_HOME = "/portal/";
-export const PORTAL_USERS = "/portal/users";
+export const PORTAL_USERS = "/users";
 export const PORTAL_QUESTION = "/portal/questions";

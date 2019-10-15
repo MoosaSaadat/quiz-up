@@ -26,7 +26,7 @@ function App (props) {
 					newList.push({ key: doc.id, ...doc.data() });
 				});
 				setAllData(newList);
-				console.log(newList);
+				// console.log(newList);
 			})
 			.catch(function (error) {
 				console.log("Error getting documents: ", error);
@@ -48,12 +48,19 @@ function App (props) {
 						/>
 						<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
 						<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
-						<Route exact path={ROUTES.GAME} component={Game} />
+						<Route exact path={ROUTES.PORTAL_USERS} component={Users} />
 						<Route
 							exact
 							path={ROUTES.QUESTIONS}
 							render={(routeProps) => (
 								<Questions ctgList={allData} {...routeProps} />
+							)}
+						/>
+						<Route
+							exact
+							path={ROUTES.GAME}
+							render={(routeProps) => (
+								<Game ctgList={allData} {...routeProps} />
 							)}
 						/>
 						<Route path={ROUTES.HOME} component={CategoryList} />
