@@ -5,6 +5,18 @@
 	align-items: center;
 }
 
+.questions-addnew {
+	background-color: #dff3e4;
+	color: #171738;
+	padding: 1rem 3rem;
+	font-size: 1rem;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	margin-bottom: 2rem;
+}
+
 .play-game {
 	background-color: #dff3e4;
 	color: #171738;
@@ -22,6 +34,41 @@
 	color: #dff3e4;
 	width: 70%;
 	margin-bottom: 2rem;
+	position: relative;
+}
+
+.question-actions {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 1rem;
+}
+
+.question-actions {
+	display: flex;
+}
+
+.question-actions > button {
+	background: transparent;
+	border: none;
+	font-size: 16px;
+	/* margin-left: 1rem; */
+	cursor: pointer;
+	padding: 0.5rem;
+	border-radius: 5px;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.question-actions > button:hover {
+	background: #dff3e4;
+}
+
+.question-input {
+	font-size: 20px;
+	background-color: #dff3e4;
+	border: none;
+	border-radius: 5px;
+	padding: 5px;
 }
 
 .question {

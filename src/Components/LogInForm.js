@@ -14,7 +14,6 @@ function LogInForm (props) {
 		props.firebase
 			.doSignInWithEmailAndPassword(email, password)
 			.then((authUser) => {
-				console.log(authUser);
 				setEmail("");
 				setPassword("");
 				props.history.push(ROUTES.HOME);

@@ -11,7 +11,7 @@ function Game (props) {
 		(ctg) => ctg.name.toLowerCase() === currCtg.toLowerCase()
 	)[0].questions;
 
-	const [ time, setTime ] = useState(10);
+	const [ time, setTime ] = useState(60);
 	const [ score, setScore ] = useState(0);
 	const [ currQues, setCurrQues ] = useState(0);
 
@@ -29,7 +29,6 @@ function Game (props) {
 			else if (time <= 0) {
 				var user = props.firebase.auth.currentUser;
 				if (user) {
-					console.log(user);
 					updateUserData(user);
 				}
 			}

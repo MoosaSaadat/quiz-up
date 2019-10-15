@@ -23,7 +23,6 @@ function SignUpForm (props) {
 				setName("");
 				setEmail("");
 				setPassword("");
-				console.log("User Added!");
 				props.history.push(ROUTES.HOME);
 			})
 			.catch((error) => {

@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { withFirebase } from "./Firebase";
 import "./Styles/Category.css";
 
 function CategoryItem (props) {
-	// console.log(props.name.toLowerCase());
 	const [ name, setName ] = useState(props.name);
-	const [ isEditing, setIsEditing ] = useState(false);
+	const [ isEditing, setIsEditing ] = useState(props.name === "");
+
+	useEffect(
+		() => {
+			if (name !== props.name)
+				props.firebase.db.collection("categories").doc(props.docId).update({
+					name
+				});
+		},
+		[ name ]
+	);
+
+	const deleteItem = () => {
+		props.firebase.db.collection("categories").doc(props.docId).delete();
+	};
 
 	const nameInput = isEditing ? (
 		<input
@@ -32,7 +46,7 @@ function CategoryItem (props) {
 				<button className="edit" onClick={() => setIsEditing(true)}>
 					<i className="fas fa-pen" />
 				</button>
-				<button className="delete" onClick={() => setIsEditing(true)}>
+				<button className="delete" onClick={deleteItem}>
 					<i className="fas fa-trash-alt" />
 				</button>
 			</div>
@@ -40,4 +54,4 @@ function CategoryItem (props) {
 	);
 }
 
-export default CategoryItem;
+export default withFirebase(CategoryItem);

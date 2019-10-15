@@ -17,7 +17,7 @@ function PortalUsers (props) {
 					newList.push({ key: doc.id, ...doc.data() });
 				});
 				setUsers(newList);
-				console.log(newList);
+				// console.log(newList);
 			})
 			.catch(function (error) {
 				console.log("Error getting documents: ", error);

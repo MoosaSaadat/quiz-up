@@ -6,7 +6,7 @@ import SignUpForm from "./Components/SignUpForm";
 import LogInForm from "./Components/LogInForm";
 import Game from "./Components/Game";
 import CategoryList from "./Components/CategoryList";
-import Questions from "./Components/PortalQuestions";
+import QuestionsList from "./Components/PortalQuestionsList";
 import Users from "./Components/PortalUsers";
 import * as ROUTES from "./Constants/Routes";
 import { withAuthentication } from "./Components/Session";
@@ -15,23 +15,34 @@ import "./App.css";
 function App (props) {
 	const [ allData, setAllData ] = useState(null);
 
-	useEffect(() => {
-		props.firebase.db
-			.collection("categories")
-			.get()
-			.then(function (querySnapshot) {
-				var newList = [];
-				querySnapshot.forEach(function (doc) {
-					// console.log(doc.id, " => ", doc.data());
-					newList.push({ key: doc.id, ...doc.data() });
+	useEffect(
+		() => {
+			props.firebase.db
+				.collection("categories")
+				.get()
+				.then(function (querySnapshot) {
+					var newList = [];
+					querySnapshot.forEach(function (doc) {
+						// console.log(doc.id, " => ", doc.data());
+						newList.push({ key: doc.id, ...doc.data() });
+					});
+					setAllData(newList);
+					// console.log(newList);
+				})
+				.catch(function (error) {
+					console.log("Error getting documents: ", error);
 				});
-				setAllData(newList);
-				// console.log(newList);
-			})
-			.catch(function (error) {
-				console.log("Error getting documents: ", error);
-			});
-	}, []);
+		},
+		[ allData ]
+	);
+
+	const addCtg = () => {
+		props.firebase.db.collection("categories").add({
+			name: "",
+			questions: []
+		});
+		setAllData((oldData) => [ ...oldData, { name: "" } ]);
+	};
 
 	return (
 		!!allData && (
@@ -43,7 +54,11 @@ function App (props) {
 							exact
 							path={ROUTES.HOME}
 							render={(routeProps) => (
-								<CategoryList ctgList={allData} {...routeProps} />
+								<CategoryList
+									ctgList={allData}
+									addCtg={addCtg}
+									{...routeProps}
+								/>
 							)}
 						/>
 						<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
@@ -53,7 +68,7 @@ function App (props) {
 							exact
 							path={ROUTES.QUESTIONS}
 							render={(routeProps) => (
-								<Questions ctgList={allData} {...routeProps} />
+								<QuestionsList ctgList={allData} {...routeProps} />
 							)}
 						/>
 						<Route

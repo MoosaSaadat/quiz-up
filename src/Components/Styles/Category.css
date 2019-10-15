@@ -4,6 +4,9 @@
 	padding: 2rem;
 	color: #dff3e4;
 	width: 70%;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
 }
 
 .category-heading {
@@ -74,4 +77,15 @@
 
 .category-item > .actions > button:hover {
 	background: #dff3e4;
+}
+
+.category-addnew {
+	background-color: #dff3e4;
+	color: #171738;
+	padding: 1rem 3rem;
+	font-size: 1rem;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
 }
