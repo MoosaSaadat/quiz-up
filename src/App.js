@@ -14,9 +14,12 @@ import "./App.css";
 
 function App (props) {
 	const [ allData, setAllData ] = useState(null);
+	const [ isDataLoading, setDataLoading ] = useState(false);
+	const [ fetchData, setFetchData ] = useState(false);
 
 	useEffect(
 		() => {
+			if (allData == null) setDataLoading(true);
 			props.firebase.db
 				.collection("categories")
 				.get()
@@ -26,29 +29,32 @@ function App (props) {
 						// console.log(doc.id, " => ", doc.data());
 						newList.push({ key: doc.id, ...doc.data() });
 					});
+					newList = newList.sort((a, b) => a.name.localeCompare(b.name));
+					console.log(newList);
 					setAllData(newList);
-					// console.log(newList);
+					setDataLoading(false);
 				})
 				.catch(function (error) {
 					console.log("Error getting documents: ", error);
 				});
 		},
-		[ allData ]
+		[ fetchData ]
 	);
 
-	const addCtg = () => {
+	const addCtg = (newItemName) => {
 		props.firebase.db.collection("categories").add({
-			name: "",
+			name: newItemName,
 			questions: []
 		});
-		setAllData((oldData) => [ ...oldData, { name: "" } ]);
+		setFetchData((data) => !data);
+		console.log(allData);
 	};
 
 	return (
-		!!allData && (
-			<HashRouter>
-				<Navbar />
-				<div className="App">
+		<HashRouter>
+			<Navbar />
+			<div className="App">
+				{!isDataLoading ? (
 					<Switch>
 						<Route
 							exact
@@ -57,6 +63,7 @@ function App (props) {
 								<CategoryList
 									ctgList={allData}
 									addCtg={addCtg}
+									setFetchData={setFetchData}
 									{...routeProps}
 								/>
 							)}
@@ -80,9 +87,11 @@ function App (props) {
 						/>
 						<Route path={ROUTES.HOME} component={CategoryList} />
 					</Switch>
-				</div>
-			</HashRouter>
-		)
+				) : (
+					<h2>LOADING DATA</h2>
+				)}
+			</div>
+		</HashRouter>
 	);
 }
 export default withAuthentication(App);

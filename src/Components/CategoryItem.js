@@ -6,7 +6,7 @@ import "./Styles/Category.css";
 
 function CategoryItem (props) {
 	const [ name, setName ] = useState(props.name);
-	const [ isEditing, setIsEditing ] = useState(props.name === "");
+	const [ isEditing, setIsEditing ] = useState(false);
 
 	useEffect(
 		() => {
@@ -20,6 +20,7 @@ function CategoryItem (props) {
 
 	const deleteItem = () => {
 		props.firebase.db.collection("categories").doc(props.docId).delete();
+		props.setFetchData((data) => !data);
 	};
 
 	const nameInput = isEditing ? (
