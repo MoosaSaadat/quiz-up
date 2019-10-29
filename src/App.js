@@ -6,7 +6,7 @@ import SignUpForm from "./Components/SignUpForm";
 import LogInForm from "./Components/LogInForm";
 import Game from "./Components/Game";
 import CategoryList from "./Components/CategoryList";
-import QuestionsList from "./Components/PortalQuestionsList";
+import PortalQuestionsList from "./Components/PortalQuestionsList";
 import Users from "./Components/PortalUsers";
 import * as ROUTES from "./Constants/Routes";
 import { withAuthentication } from "./Components/Session";
@@ -75,7 +75,7 @@ function App (props) {
 							exact
 							path={ROUTES.QUESTIONS}
 							render={(routeProps) => (
-								<QuestionsList ctgList={allData} {...routeProps} />
+								<PortalQuestionsList ctgList={allData} {...routeProps} />
 							)}
 						/>
 						<Route

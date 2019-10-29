@@ -64,11 +64,13 @@
 }
 
 .question-input {
-	font-size: 20px;
+	font-size: 3rem;
 	background-color: #dff3e4;
 	border: none;
 	border-radius: 5px;
 	padding: 5px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .question {
@@ -107,4 +109,9 @@
 
 .answers-link:hover {
 	background-color: #17173855;
+}
+
+textarea {
+	width: 100%;
+	box-sizing: border-box;
 }
