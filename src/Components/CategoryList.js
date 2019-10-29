@@ -13,7 +13,8 @@ function CategoryList (props) {
 			key={item.key}
 			docId={item.key}
 			name={item.name}
-			setFetchData={props.setFetchData}
+			userIsAdmin={props.userIsAdmin}
+			toggleFetchData={props.toggleFetchData}
 		/>
 	));
 
@@ -23,32 +24,38 @@ function CategoryList (props) {
 		setName("");
 	};
 
-	const newCtgForm = showForm ? (
-		<li className="category-item">
-			<input
-				type="text"
-				className="name-input"
-				value={name}
-				onChange={(event) => setName(event.target.value)}
-				onBlur={submitForm}
-				onKeyDown={(event) => {
-					if (event.keyCode === 13) {
-						submitForm();
-					}
-				}}
-				autoFocus
-			/>
-			<div className="actions">
-				<button className="edit" onClick={submitForm}>
-					<i className="fas fa-plus" />
-				</button>
-			</div>
-		</li>
-	) : (
-		<button onClick={() => setShowForm(true)} className="category-addnew">
-			Add New
-		</button>
-	);
+	let newCtgForm;
+	if (props.userIsAdmin && showForm) {
+		newCtgForm = (
+			<li className="category-item">
+				<input
+					type="text"
+					className="name-input"
+					value={name}
+					onChange={(event) => setName(event.target.value)}
+					onBlur={submitForm}
+					onKeyDown={(event) => {
+						if (event.keyCode === 13) {
+							submitForm();
+						}
+					}}
+					autoFocus
+				/>
+				<div className="actions">
+					<button className="edit" onClick={submitForm}>
+						<i className="fas fa-plus" />
+					</button>
+				</div>
+			</li>
+		);
+	}
+	else if (props.userIsAdmin && !showForm) {
+		newCtgForm = (
+			<button onClick={() => setShowForm(true)} className="category-addnew">
+				Add New
+			</button>
+		);
+	}
 
 	return (
 		<div className="category-wrapper">

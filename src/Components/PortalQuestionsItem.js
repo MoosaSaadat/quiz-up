@@ -6,13 +6,18 @@ import "./Styles/Questions.css";
 function PortalQuestionsItem (props) {
 	const [ ques, setQues ] = useState(props.ques);
 	const [ answers, setAnswers ] = useState(props.answers);
-	const [ corrAns, setCorrAns ] = useState("0");
+	const [ corrAns, setCorrAns ] = useState(props.corrAns);
 	const [ isEditing, setIsEditing ] = useState(false);
 
 	const submitForm = () => {
 		setIsEditing(false);
-		props.updateQuestions(props.idx, ques, answers, corrAns);
-		//DO ACTION
+		let newQues = {
+			key: props.idx,
+			ques: ques,
+			answers: answers,
+			correctAns: corrAns
+		};
+		props.updateQuestion(newQues);
 	};
 
 	const makeAnswersArray = (fullString) => {
@@ -22,16 +27,18 @@ function PortalQuestionsItem (props) {
 
 	const completeComponent = !isEditing ? (
 		<div className="question-wrapper">
-			<div className="question-actions">
-				<button className="question-edit" onClick={() => setIsEditing(true)}>
-					<i className="fas fa-pen" />
-				</button>
-				<button
-					className="question-delete"
-					onClick={() => props.deleteQuestion(props.idx)}>
-					<i className="fas fa-trash-alt" />
-				</button>
-			</div>
+			{props.userIsAdmin && (
+				<div className="question-actions">
+					<button className="question-edit" onClick={() => setIsEditing(true)}>
+						<i className="fas fa-pen" />
+					</button>
+					<button
+						className="question-delete"
+						onClick={() => props.deleteQuestion(props.idx)}>
+						<i className="fas fa-trash-alt" />
+					</button>
+				</div>
+			)}{" "}
 			<h2 className="question">{ques}</h2>
 			<ul className="answers-list">
 				{answers.map((answer, idx) => (
@@ -44,7 +51,7 @@ function PortalQuestionsItem (props) {
 	) : (
 		<div className="question-wrapper">
 			<div className="question-actions">
-				<button className="question-edit" onClick={() => setIsEditing(false)}>
+				<button className="question-edit" onClick={() => submitForm()}>
 					<i className="fas fa-plus" />
 				</button>
 			</div>
@@ -53,7 +60,6 @@ function PortalQuestionsItem (props) {
 				className="question-input"
 				value={ques}
 				onChange={(event) => setQues(event.target.value)}
-				onBlur={submitForm}
 			/>
 			<hr />
 			<textarea
@@ -61,7 +67,6 @@ function PortalQuestionsItem (props) {
 				className="name-input"
 				value={answers}
 				onChange={(event) => makeAnswersArray(event.target.value)}
-				onBlur={submitForm}
 			/>
 			<hr />
 			<input
@@ -70,7 +75,6 @@ function PortalQuestionsItem (props) {
 				value={"Correct Answer: " + corrAns}
 				onChange={(event) =>
 					setCorrAns(event.target.value[event.target.value.length - 1])}
-				onBlur={submitForm}
 			/>
 		</div>
 	);

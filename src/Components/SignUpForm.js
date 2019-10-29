@@ -17,6 +17,7 @@ function SignUpForm (props) {
 			.add({
 				name,
 				email,
+				isAdmin: false,
 				highScore: 0
 			})
 			.then(() => {

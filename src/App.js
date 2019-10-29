@@ -16,6 +16,37 @@ function App (props) {
 	const [ allData, setAllData ] = useState(null);
 	const [ isDataLoading, setDataLoading ] = useState(false);
 	const [ fetchData, setFetchData ] = useState(false);
+	const [ userIsAdmin, setUserIsAdmin ] = useState(false);
+
+	useEffect(
+		() => {
+			let currUser = props.firebase.auth.currentUser;
+			if (currUser) {
+				props.firebase.db
+					.collection("users")
+					.get()
+					.then(function (querySnapshot) {
+						querySnapshot.forEach(function (doc) {
+							if (
+								doc.data().email === currUser.email &&
+								doc.data().isAdmin === true
+							) {
+								setUserIsAdmin(true);
+								console.log("ADMIN LOGGED IN!");
+							}
+							else if (
+								doc.data().email === currUser.email &&
+								doc.data().isAdmin === false
+							) {
+								setUserIsAdmin(false);
+								console.log("USER LOGGED IN!");
+							}
+						});
+					});
+			}
+		},
+		[ props.firebase.auth.currentUser ]
+	);
 
 	useEffect(
 		() => {
@@ -41,13 +72,75 @@ function App (props) {
 		[ fetchData ]
 	);
 
+	const toggleFetchData = () => {
+		setFetchData((oldData) => !oldData);
+	};
+
 	const addCtg = (newItemName) => {
 		props.firebase.db.collection("categories").add({
 			name: newItemName,
 			questions: []
 		});
-		setFetchData((data) => !data);
-		console.log(allData);
+		toggleFetchData();
+	};
+
+	const addQuestion = (docId, questions) => {
+		let newDoc;
+		allData.filter((ctg) => {
+			if (ctg.key === docId) {
+				ctg.questions = questions;
+				ctg.nextKey++;
+				newDoc = ctg;
+			}
+			return ctg;
+		});
+		newDoc = {
+			name: newDoc.name,
+			nextKey: newDoc.nextKey,
+			questions: newDoc.questions
+		};
+		// console.log("newDoc", newDoc);
+		props.firebase.db.collection("categories").doc(docId).set(newDoc);
+		toggleFetchData();
+	};
+
+	const deleteQuestion = (docId, queskey) => {
+		let newDoc;
+		allData.filter((ctg) => {
+			if (ctg.key === docId) {
+				ctg.questions = ctg.questions.filter((ques) => ques.key != queskey);
+				newDoc = ctg;
+			}
+		});
+		newDoc = {
+			name: newDoc.name,
+			nextKey: newDoc.nextKey,
+			questions: newDoc.questions
+		};
+		// console.log("newDoc", newDoc);
+		props.firebase.db.collection("categories").doc(docId).set(newDoc);
+		toggleFetchData();
+	};
+
+	const updateQuestion = (docId, newQues) => {
+		let newDoc;
+		allData.filter((ctg) => {
+			if (ctg.key === docId) {
+				ctg.questions = ctg.questions.map((ques) => {
+					if (ques.key === newQues.key) return newQues;
+					else return ques;
+				});
+				newDoc = ctg;
+			}
+		});
+		newDoc = {
+			name: newDoc.name,
+			nextKey: newDoc.nextKey,
+			questions: newDoc.questions
+		};
+		// console.log("newDoc", newDoc);
+		props.firebase.db.collection("categories").doc(docId).set(newDoc);
+		toggleFetchData();
 	};
 
 	return (
@@ -62,20 +155,42 @@ function App (props) {
 							render={(routeProps) => (
 								<CategoryList
 									ctgList={allData}
+									userIsAdmin={userIsAdmin}
 									addCtg={addCtg}
-									setFetchData={setFetchData}
+									toggleFetchData={toggleFetchData}
 									{...routeProps}
 								/>
 							)}
 						/>
 						<Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
-						<Route exact path={ROUTES.LOG_IN} component={LogInForm} />
-						<Route exact path={ROUTES.PORTAL_USERS} component={Users} />
+						<Route
+							exact
+							path={ROUTES.LOG_IN}
+							render={(routeProps) => (
+								<LogInForm setUserIsAdmin={setUserIsAdmin} {...routeProps} />
+							)}
+						/>
+						<Route
+							exact
+							path={ROUTES.PORTAL_USERS}
+							component={Users}
+							render={(routeProps) => (
+								<Users userIsAdmin={userIsAdmin} {...routeProps} />
+							)}
+						/>
 						<Route
 							exact
 							path={ROUTES.QUESTIONS}
 							render={(routeProps) => (
-								<PortalQuestionsList ctgList={allData} {...routeProps} />
+								<PortalQuestionsList
+									ctgList={allData}
+									userIsAdmin={userIsAdmin}
+									addQuestion={addQuestion}
+									deleteQuestion={deleteQuestion}
+									updateQuestion={updateQuestion}
+									toggleFetchData={toggleFetchData}
+									{...routeProps}
+								/>
 							)}
 						/>
 						<Route
