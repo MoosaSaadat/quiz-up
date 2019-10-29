@@ -145,7 +145,7 @@ function App (props) {
 
 	return (
 		<HashRouter>
-			<Navbar />
+			<Navbar userIsAdmin={userIsAdmin} />
 			<div className="App">
 				{!isDataLoading ? (
 					<Switch>

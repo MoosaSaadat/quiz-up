@@ -15,6 +15,13 @@ function Navbar (props) {
 						QUIZ UP
 					</Link>
 				</li>
+				{props.userIsAdmin && (
+					<li className="navbar-item">
+						<Link to={ROUTES.PORTAL_USERS} className="show-user-btn">
+							Show Users
+						</Link>
+					</li>
+				)}{" "}
 				<AuthUserContext.Consumer>
 					{(authUser) =>
 						authUser && (

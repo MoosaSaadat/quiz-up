@@ -32,11 +32,17 @@
 	color: #dff3e4;
 }
 
-.navbar-item > button {
+.navbar-item > button,
+.show-user-btn {
 	background: transparent;
 	border: none;
 	background-color: #dff3e4;
 	border-radius: 5px;
 	cursor: pointer;
 	padding: 10px 20px;
+}
+
+.show-user-btn {
+	text-decoration: none;
+	color: black;
 }
