@@ -99,9 +99,18 @@ function App (props) {
 			nextKey: newDoc.nextKey,
 			questions: newDoc.questions
 		};
-		// console.log("newDoc", newDoc);
-		props.firebase.db.collection("categories").doc(docId).set(newDoc);
-		toggleFetchData();
+		console.log("addQuestion", newDoc);
+		props.firebase.db
+			.collection("categories")
+			.doc(docId)
+			.set(newDoc)
+			.then(function () {
+				console.log("Document successfully written!");
+				toggleFetchData();
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
 	};
 
 	const deleteQuestion = (docId, queskey) => {
@@ -117,9 +126,18 @@ function App (props) {
 			nextKey: newDoc.nextKey,
 			questions: newDoc.questions
 		};
-		// console.log("newDoc", newDoc);
-		props.firebase.db.collection("categories").doc(docId).set(newDoc);
-		toggleFetchData();
+		console.log("deleteQuestion", newDoc);
+		props.firebase.db
+			.collection("categories")
+			.doc(docId)
+			.set(newDoc)
+			.then(function () {
+				console.log("Document successfully written!");
+				toggleFetchData();
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
 	};
 
 	const updateQuestion = (docId, newQues) => {
@@ -138,9 +156,18 @@ function App (props) {
 			nextKey: newDoc.nextKey,
 			questions: newDoc.questions
 		};
-		// console.log("newDoc", newDoc);
-		props.firebase.db.collection("categories").doc(docId).set(newDoc);
-		toggleFetchData();
+		console.log("updateQuestion", newDoc);
+		props.firebase.db
+			.collection("categories")
+			.doc(docId)
+			.set(newDoc)
+			.then(function () {
+				console.log("Document successfully written!");
+				toggleFetchData();
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
 	};
 
 	return (

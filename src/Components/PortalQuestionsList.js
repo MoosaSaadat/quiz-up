@@ -23,7 +23,7 @@ function PortalQuestionsList (props) {
 	};
 
 	const deleteQuestion = (idx) => {
-		// setQuestions(questions.filter((ques) => ques.key != idx));
+		setQuestions(questions.filter((ques) => ques.key != idx));
 		props.deleteQuestion(ctgDocId, idx);
 	};
 	const makeAnswersArray = (fullString) => {
